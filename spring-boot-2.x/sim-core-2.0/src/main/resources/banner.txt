@@ -1,4 +1,4 @@
-${AnsiColor.BRIGHT_GREEN}
+${AnsiColor.BRIGHT_YELLOW}
 =====================================================================
 
  ________      _____ ______       ________    _____ ______
@@ -12,6 +12,3 @@ ${AnsiColor.BRIGHT_GREEN}
 
 =====================================================================
 
-${AnsiColor.BRIGHT_RED}
-Application Version: ${application.version}${application.formatted-version}
-Spring Boot Version: ${spring-boot.version}${spring-boot.formatted-version}
