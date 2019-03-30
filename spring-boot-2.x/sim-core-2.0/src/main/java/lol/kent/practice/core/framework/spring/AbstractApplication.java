@@ -1,12 +1,17 @@
 package lol.kent.practice.core.framework.spring;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
  * 标题、简要说明. <br>
@@ -25,15 +30,28 @@ import org.springframework.context.annotation.Bean;
 public abstract class AbstractApplication {
 
     @Bean
+    public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
+        Jackson2ObjectMapperBuilder jsonBuilderConfig = new Jackson2ObjectMapperBuilder();
+        jsonBuilderConfig.propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+        jsonBuilderConfig.failOnUnknownProperties(false);
+        jsonBuilderConfig.serializationInclusion(JsonInclude.Include.ALWAYS);
+        return jsonBuilderConfig;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.hikari")
+    @Lazy
     public HikariDataSource dataSource() {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }
 
     @Bean
+    @Lazy
     public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(this.dataSource());
         return sessionFactory.getObject();
     }
+
 
 }
