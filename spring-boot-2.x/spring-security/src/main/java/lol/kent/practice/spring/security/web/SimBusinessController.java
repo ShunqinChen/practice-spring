@@ -1,5 +1,6 @@
 package lol.kent.practice.spring.security.web;
 
+import lol.kent.practice.spring.security.user.domain.BizDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class SimBusinessController {
 
     @GetMapping
-    public String doSomething() {
-        return "Hello , This is simulate business";
+    public BizDTO doSomething() {
+        BizDTO bizDTO = new BizDTO();
+        bizDTO.setMusicPlayer("kentChensq");
+        return bizDTO;
     }
+
 
 }
