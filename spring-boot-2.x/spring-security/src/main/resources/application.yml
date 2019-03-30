@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: @project.build.finalName@
+  datasource:
+    hikari:
+      username: root
+      password: devOps!@#
+      jdbc-url: jdbc:mysql://192.168.0.48:3306/biz_agent?useSSL=false
+
+
+# \u516C\u4F17\u53F7\u540E\u53F0\u57FA\u672C\u914D\u7F6E>\u670D\u52A1\u5668\u914D\u7F6E\u4E0B\u7684TOKEN
+wechat:
+  passive:
+    session:
+      token: ampmfit
+
+# Access Log Setting
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      prefix: access
+      suffix: .log
+      file-date-format: .yyyy-MM-dd
+      rename-on-rotate: true
+      directory: /program/logs/service/${spring.application.name}
+    basedir: /program/service/${spring.application.name}
+
+# Management
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: ["*"]
+security:
+  enabled: false
+
