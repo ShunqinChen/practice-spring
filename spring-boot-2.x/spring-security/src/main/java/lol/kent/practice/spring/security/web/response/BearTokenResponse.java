@@ -1,5 +1,7 @@
 package lol.kent.practice.spring.security.web.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * 标题、简要说明. <br>
  * 类详细说明.
@@ -14,12 +16,16 @@ package lol.kent.practice.spring.security.web.response;
  */
 public class BearTokenResponse {
 
+    @JsonProperty("access_token")
     private String accessToken;
 
+    @JsonProperty("token_type")
     private String tokenType;
 
+    @JsonProperty("expires_in")
     private long expiresIn;
 
+    @JsonProperty("refresh_token")
     private long refreshToken;
 
     public BearTokenResponse() {
