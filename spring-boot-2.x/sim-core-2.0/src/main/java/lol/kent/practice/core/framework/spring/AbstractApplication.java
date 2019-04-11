@@ -13,6 +13,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import java.util.TimeZone;
+
+import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
+import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+
 /**
  * 标题、简要说明. <br>
  * 类详细说明.
@@ -35,6 +40,8 @@ public abstract class AbstractApplication {
         jsonBuilderConfig.propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
         jsonBuilderConfig.failOnUnknownProperties(false);
         jsonBuilderConfig.serializationInclusion(JsonInclude.Include.ALWAYS);
+        jsonBuilderConfig.timeZone(TimeZone.getDefault());
+        jsonBuilderConfig.featuresToEnable(SORT_PROPERTIES_ALPHABETICALLY, ORDER_MAP_ENTRIES_BY_KEYS);
         return jsonBuilderConfig;
     }
 
