@@ -1,8 +1,12 @@
 package lol.kent.practice.core.framework.spring;
 
+import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
+import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.zaxxer.hikari.HikariDataSource;
+import java.util.TimeZone;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -12,15 +16,10 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-
-import java.util.TimeZone;
-
-import static com.fasterxml.jackson.databind.MapperFeature.SORT_PROPERTIES_ALPHABETICALLY;
-import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * 标题、简要说明. <br>
- * 类详细说明.
+ * 标题、简要说明. <br> 类详细说明.
  * <p>
  * Copyright: Copyright (c) 2019年02月27日 20:47
  * <p>
@@ -32,6 +31,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.ORDER_MAP_ENTR
  */
 @SpringBootApplication(scanBasePackages = "lol.kent.*")
 @MapperScan(basePackages = "lol.kent.*")
+@EnableScheduling
 public abstract class AbstractApplication {
 
     @Bean
@@ -41,7 +41,8 @@ public abstract class AbstractApplication {
         jsonBuilderConfig.failOnUnknownProperties(false);
         jsonBuilderConfig.serializationInclusion(JsonInclude.Include.ALWAYS);
         jsonBuilderConfig.timeZone(TimeZone.getDefault());
-        jsonBuilderConfig.featuresToEnable(SORT_PROPERTIES_ALPHABETICALLY, ORDER_MAP_ENTRIES_BY_KEYS);
+        jsonBuilderConfig
+                .featuresToEnable(SORT_PROPERTIES_ALPHABETICALLY, ORDER_MAP_ENTRIES_BY_KEYS);
         return jsonBuilderConfig;
     }
 
