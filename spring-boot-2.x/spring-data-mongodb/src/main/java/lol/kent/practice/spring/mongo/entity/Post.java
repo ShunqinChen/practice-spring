@@ -1,5 +1,7 @@
-package lol.kent.practice.spring.mongo;
+package lol.kent.practice.spring.mongo.entity;
 
+import java.util.List;
+import lol.kent.practice.spring.mongo.framework.mongo.Populate;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -32,5 +34,17 @@ public class Post {
 
     @DBRef
     private User createBy;
+
+    @Populate(ref = User.class, as = "realUser")
+    private ObjectId updateBy;
+
+    private User updateUser;
+
+    private User realUser;
+
+    @Populate(ref = User.class, as = "commentUsers")
+    private List<ObjectId> commentUserIds;
+
+    private List<User> commentUsers;
 
 }

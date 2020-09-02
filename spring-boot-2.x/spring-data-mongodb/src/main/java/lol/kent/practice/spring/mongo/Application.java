@@ -7,7 +7,9 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.proj
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import lol.kent.practice.spring.mongo.dao.PostRepository;
+import lol.kent.practice.spring.mongo.entity.Post;
+import lol.kent.practice.spring.mongo.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class Application {
     @Autowired
     private Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder;
 
-    @PostConstruct
+    //    @PostConstruct
     public void getByRepo() throws JsonProcessingException {
         ObjectMapper objectMapper = jackson2ObjectMapperBuilder.build();
         Post post = postRepository.getPostById("5f44b21a3d554379c156398d");
@@ -63,7 +65,6 @@ public class Application {
 //        Post post = mongoTemplate.findOne(Query.query(filter), Post.class);
 //        log.info("GET POST:{}", post);
     }
-
 
     public User saveUser() {
         User user = new User();

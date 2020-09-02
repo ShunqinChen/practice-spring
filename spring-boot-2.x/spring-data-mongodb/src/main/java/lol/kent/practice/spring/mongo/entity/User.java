@@ -1,4 +1,4 @@
-package lol.kent.practice.spring.mongo;
+package lol.kent.practice.spring.mongo.entity;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -25,4 +25,9 @@ public class User {
     private String id;
 
     private String name;
+
+    private Integer age;
+
+    private String mail;
+
 }
