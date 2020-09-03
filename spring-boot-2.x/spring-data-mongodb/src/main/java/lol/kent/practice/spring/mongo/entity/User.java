@@ -1,6 +1,7 @@
 package lol.kent.practice.spring.mongo.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,6 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @version 1.0.0
  */
 @Data
+@Accessors(chain = true)
 @Document("user")
 public class User {
 
