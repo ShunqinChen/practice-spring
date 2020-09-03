@@ -45,7 +45,9 @@ public class Comment {
     @MongoIdRef
     private User createUser;
 
-    //   @Field(value = "updateUserId", targetType = FieldType.OBJECT_ID) //targetType转换能力有限,一般String 2 ObjId可以
+    /**
+     * 尝试使用targetType转换Object为ObjectId不可以,一般String 2 ObjId可以 同时也测试结合DBRef注解,一样不行
+     */
     @DBRef
     @Field(value = "updateUserId", targetType = FieldType.OBJECT_ID)
     private User updateUser;
