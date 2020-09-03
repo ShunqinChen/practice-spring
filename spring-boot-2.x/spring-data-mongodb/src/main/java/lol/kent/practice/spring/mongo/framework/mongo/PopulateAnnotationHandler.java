@@ -34,11 +34,11 @@ import org.springframework.util.ReflectionUtils;
  */
 @Slf4j
 @Component
-public class MongoQueryEventListener extends AbstractMongoEventListener {
+public class PopulateAnnotationHandler extends AbstractMongoEventListener {
 
     private MongoTemplate mongoTemplate;
 
-    public MongoQueryEventListener(MongoTemplate mongoTemplate) {
+    public PopulateAnnotationHandler(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
 

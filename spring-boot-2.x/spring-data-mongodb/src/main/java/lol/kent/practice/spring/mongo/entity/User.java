@@ -1,7 +1,9 @@
 package lol.kent.practice.spring.mongo.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.experimental.Tolerate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,6 +21,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @version 1.0.0
  */
 @Data
+@AllArgsConstructor
 @Accessors(chain = true)
 @Document("user")
 public class User {
@@ -32,4 +35,7 @@ public class User {
 
     private String mail;
 
+    @Tolerate
+    public User() {
+    }
 }
