@@ -10,7 +10,10 @@ import lombok.experimental.Tolerate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 
 /**
  * <pre>
@@ -36,11 +39,16 @@ public class Comment {
 
     private String content;
 
-    @MongoIdRef
+    @MongoIdRef(renamed = "favorUserIds")
     private List<User> favorUsers;
 
     @MongoIdRef
     private User createUser;
+
+    //   @Field(value = "updateUserId", targetType = FieldType.OBJECT_ID) //targetType转换能力有限,一般String 2 ObjId可以
+    @DBRef
+    @Field(value = "updateUserId", targetType = FieldType.OBJECT_ID)
+    private User updateUser;
 
     @CreatedDate
     private Date createdAt;

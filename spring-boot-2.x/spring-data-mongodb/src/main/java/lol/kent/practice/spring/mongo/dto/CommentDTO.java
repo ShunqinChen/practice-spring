@@ -30,6 +30,8 @@ public class CommentDTO {
 
     private String createUser;
 
+    private String updateUser;
+
     @Tolerate
     public CommentDTO() {
     }

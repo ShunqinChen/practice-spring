@@ -51,6 +51,7 @@ public class CommentController {
                 .content(params.getContent())
                 .favorUsers(favorUsers)
                 .createUser(new User().setId(params.getCreateUser()))
+                .updateUser(new User().setId(params.getUpdateUser()))
                 .build();
 
         mongoTemplate.insert(comment);

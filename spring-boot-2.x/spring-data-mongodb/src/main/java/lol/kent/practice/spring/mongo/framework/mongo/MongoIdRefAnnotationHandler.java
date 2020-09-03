@@ -24,6 +24,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * <pre>
@@ -58,21 +59,27 @@ public class MongoIdRefAnnotationHandler extends AbstractMongoEventListener {
             return;
         }
 
-        String targetClassName = document.getString("_class");
+        Class<?> entityClass = source.getClass();
 
-        ReflectionUtils.doWithFields(Class.forName(targetClassName), field -> {
+        ReflectionUtils.doWithFields(entityClass, field -> {
             ReflectionUtils.makeAccessible(field);
 
             if (!field.isAnnotationPresent(MongoIdRef.class)) {
                 return;
             }
 
+            MongoIdRef docAnnotation = field.getAnnotation(MongoIdRef.class);
+            String newNameOfField = docAnnotation.renamed();
+            String finalFieldName = StringUtils.isEmpty(newNameOfField) ? field.getName() : newNameOfField;
+
             if (isSingleDocument(field)) {
                 ObjectId id = processSingleDocumentBeforeSave(field, source);
-                document.put(field.getName(), id);
+                document.remove(field.getName());
+                document.put(finalFieldName, id);
             } else {
                 List<ObjectId> ids = processListDocumentsBeforeSave(field, source);
-                document.put(field.getName(), ids);
+                document.remove(field.getName());
+                document.put(finalFieldName, ids);
             }
         });
 
@@ -187,7 +194,10 @@ public class MongoIdRefAnnotationHandler extends AbstractMongoEventListener {
      * @return referenced document from foreign collection
      */
     private Object processSingleDocumentAfterLoad(Document document, Field field) {
-        ObjectId id = document.getObjectId(field.getName());
+        MongoIdRef fieldAnnotation = field.getAnnotation(MongoIdRef.class);
+        String realStoreFieldName =
+                StringUtils.isEmpty(fieldAnnotation.renamed()) ? field.getName() : fieldAnnotation.renamed();
+        ObjectId id = document.getObjectId(realStoreFieldName);
         if (Objects.isNull(id)) {
             return null;
         }
@@ -224,7 +234,10 @@ public class MongoIdRefAnnotationHandler extends AbstractMongoEventListener {
      * @return referenced document from foreign collection
      */
     private List<?> processListDocumentsAfterLoad(Document document, Field field) {
-        List<ObjectId> ids = document.getList(field.getName(), ObjectId.class);
+        MongoIdRef fieldAnnotation = field.getAnnotation(MongoIdRef.class);
+        String realStoreFieldName =
+                StringUtils.isEmpty(fieldAnnotation.renamed()) ? field.getName() : fieldAnnotation.renamed();
+        List<ObjectId> ids = document.getList(realStoreFieldName, ObjectId.class);
         if (CollectionUtils.isEmpty(ids)) {
             return Collections.emptyList();
         }

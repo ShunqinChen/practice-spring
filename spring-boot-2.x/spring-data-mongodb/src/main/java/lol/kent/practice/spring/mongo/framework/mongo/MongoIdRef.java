@@ -5,6 +5,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.apache.logging.log4j.util.Strings;
 
 /**
  * <pre>
@@ -19,11 +20,16 @@ import java.lang.annotation.Target;
  * @author Shunqin.Chen
  * @version 1.0.0
  */
-
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD})
 public @interface MongoIdRef {
 
+    /**
+     * rename local field after save
+     *
+     * @return new name of local field
+     */
+    String renamed() default Strings.EMPTY;
 
 }
