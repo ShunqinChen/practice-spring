@@ -59,6 +59,6 @@ public class CommentController {
 
     @GetMapping("/{commentId}")
     public Comment get(@PathVariable("commentId") String id) {
-        return commentRepository.findById(id).get();
+        return commentRepository.findOneById(id);
     }
 }
