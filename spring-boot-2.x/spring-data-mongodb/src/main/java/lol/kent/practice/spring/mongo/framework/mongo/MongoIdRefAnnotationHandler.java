@@ -5,10 +5,10 @@ import static java.util.stream.Collectors.toList;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
@@ -95,9 +95,7 @@ public class MongoIdRefAnnotationHandler extends AbstractMongoEventListener {
             return;
         }
 
-        String targetClassName = document.getString("_class");
-
-        ReflectionUtils.doWithFields(Class.forName(targetClassName), field -> {
+        ReflectionUtils.doWithFields(event.getType(), field -> {
             ReflectionUtils.makeAccessible(field);
 
             if (!field.isAnnotationPresent(MongoIdRef.class)) {
@@ -116,9 +114,10 @@ public class MongoIdRefAnnotationHandler extends AbstractMongoEventListener {
         super.onAfterLoad(event);
     }
 
+    @SneakyThrows
     private boolean isSingleDocument(Field field) {
         Class fieldType = field.getType();
-        return !(fieldType == List.class || fieldType == Set.class);
+        return !(Collection.class.isAssignableFrom(fieldType));
     }
 
     private ObjectId processSingleDocumentBeforeSave(Field field, Object source) {
