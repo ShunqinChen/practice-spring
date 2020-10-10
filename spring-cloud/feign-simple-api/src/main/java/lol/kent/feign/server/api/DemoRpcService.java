@@ -38,6 +38,12 @@ public interface DemoRpcService {
     @RequestLine("GET /stores/{storeId}/books")
     List<Book> listByStore(@Param("storeId") String storeId);
 
+    /**
+     * POST测试 测试对象接收
+     *
+     * @param book client端传入对象,传入时ID假定id为空
+     * @return Book 创建结果,对ID进行随机赋值
+     */
     @RequestLine("POST /books")
     Book create(@QueryMap Book book);
 }
