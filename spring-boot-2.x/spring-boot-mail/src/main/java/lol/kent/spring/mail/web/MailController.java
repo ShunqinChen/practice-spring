@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * TODO: 1. 附件邮件: 单,多附件 2. 模版邮件: 样式测试 3. 图片邮件: 单,多图片,URL图片
+ */
 @Slf4j
 @RestController
 @RequestMapping("/mail")
