@@ -18,7 +18,6 @@ import org.bson.BSONObject;
 import org.bson.BasicBSONObject;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.omg.CORBA.Object;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
@@ -120,6 +119,10 @@ public class PostController {
 
         Document filterDoc = new Document("id", postId);
         record = mongoTemplate.findOne(new BasicQuery(filterDoc), Post.class);
+        log.info("findOne 4:{}", objectMapper.writeValueAsString(record));
+
+        BasicQuery filterByBasicQuery = new BasicQuery("{_id: '5f4e3744fe76bb716bf03bb6'}");
+        record = mongoTemplate.findOne(filterByBasicQuery, Post.class);
         log.info("findOne 4:{}", objectMapper.writeValueAsString(record));
 
         MatchOperation match = match(Criteria.where("_id").is(postId));
