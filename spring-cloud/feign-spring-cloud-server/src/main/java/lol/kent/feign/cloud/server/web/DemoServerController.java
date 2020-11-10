@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,8 +32,9 @@ public class DemoServerController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @GetMapping("{bookId}")
-    public Book get(@PathVariable Integer bookId) {
+    public Book get(@PathVariable Integer bookId, @RequestHeader("X-CorpId") String corpId) {
         logger.info("book id:{}", bookId);
+        logger.info("corpId in Header:{}", corpId);
         return Book.builder().id(bookId).name("王五的书").build();
     }
 
