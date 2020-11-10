@@ -13,7 +13,6 @@
   <groupId>lol.kent.practice</groupId>
   <artifactId>admin-consul-client</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>admin-client</name>
   <description>Spring Boot Admin Client</description>
 
   <properties>
@@ -29,11 +28,17 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+    <!--使用服务发现时无需依赖spring-boot-admin服务发现自动下发注册信息到节点-->
     <dependency>
       <groupId>de.codecentric</groupId>
       <artifactId>spring-boot-admin-starter-client</artifactId>
       <version>2.2.3</version>
     </dependency>
+    <!--  使用服务发现时请手动依赖actuator,不适用服务发现spring-boot-admin-starter-client中已经依赖了actuator  -->
+    <!--    <dependency>-->
+    <!--      <groupId>org.springframework.boot</groupId>-->
+    <!--      <artifactId>spring-boot-starter-actuator</artifactId>-->
+    <!--    </dependency>-->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-consul-discovery</artifactId>
