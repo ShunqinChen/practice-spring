@@ -1,6 +1,8 @@
 package lol.kent.practice.cloud.admin;
 
 import de.codecentric.boot.admin.server.config.AdminServerProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
@@ -28,6 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final String adminContextPath;
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     public SecurityConfig(AdminServerProperties adminServerProperties) {
         this.adminContextPath = adminServerProperties.getContextPath();
     }
@@ -40,7 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests((authorizeRequests) -> authorizeRequests
                 .antMatchers(this.adminContextPath + "/assets/**").permitAll()
-                .antMatchers(this.adminContextPath + "/login").permitAll().anyRequest().authenticated())
+                .antMatchers(this.adminContextPath + "/login").permitAll()
+                .antMatchers(this.adminContextPath + "/actuator/**").permitAll()
+                .antMatchers(this.adminContextPath + "/monitor/**").permitAll()
+                .anyRequest().authenticated())
                 .formLogin((formLogin) -> formLogin.loginPage(this.adminContextPath + "/login")
                         .successHandler(successHandler))
                 .logout((logout) -> logout.logoutUrl(this.adminContextPath + "/logout"))
