@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: config-consul-client
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: 192.168.0.100
+      port: 8500
+      config:
+        format: yaml
