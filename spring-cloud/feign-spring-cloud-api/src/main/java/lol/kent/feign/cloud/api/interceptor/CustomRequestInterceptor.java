@@ -18,7 +18,8 @@ import feign.RequestTemplate;
  */
 public class CustomRequestInterceptor implements RequestInterceptor {
 
+    @Override
     public void apply(RequestTemplate requestTemplate) {
-        requestTemplate.header("X-CorpId", "1024");
+        requestTemplate.header("X-CorpId", SecurityContextHolder.get("appName", String.class));
     }
 }

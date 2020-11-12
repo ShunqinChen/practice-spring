@@ -75,7 +75,7 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>2.3.0.RELEASE</version>
         <configuration>
-          <mainClass>lol.kent.practice.spring.admin.Bootstrap</mainClass>
+          <mainClass>lol.kent.practice.spring.admin.lol.kent.practice.cloud.config.Bootstrap</mainClass>
         </configuration>
         <executions>
           <execution>
