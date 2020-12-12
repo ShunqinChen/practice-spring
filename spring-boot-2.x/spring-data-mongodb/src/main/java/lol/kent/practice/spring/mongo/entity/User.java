@@ -1,10 +1,15 @@
 package lol.kent.practice.spring.mongo.entity;
 
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.Tolerate;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -35,7 +40,26 @@ public class User {
 
     private String mail;
 
+    @CreatedDate
+    private Date createdTime;
+
+    @LastModifiedDate
+    private Date updatedTime;
+
+    @CreatedBy
+    private String createdUserId;
+
+    @LastModifiedBy
+    private String upatedUserId;
+
     @Tolerate
     public User() {
+    }
+
+    public User(String id, String name, Integer age, String mail) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.mail = mail;
     }
 }
