@@ -26,6 +26,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
  * @author Shunqin.Chen
  */
 @Configuration
+// auditorAwareProvider 可以不用手工指定,有声明bean就可以, dateTimeProviderRef 有默认实现,可以不用写
 @EnableMongoAuditing(auditorAwareRef = "auditorAwareProvider", dateTimeProviderRef = "dateTimeAwareProvider")
 public class MongoConfig {
 
