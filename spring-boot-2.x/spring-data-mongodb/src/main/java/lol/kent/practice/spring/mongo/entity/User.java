@@ -1,10 +1,6 @@
 package lol.kent.practice.spring.mongo.entity;
 
 import java.util.Date;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.experimental.Accessors;
-import lombok.experimental.Tolerate;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -25,11 +21,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author Shunqin.Chen
  * @version 1.0.0
  */
-@Data
-@AllArgsConstructor
-@Accessors(chain = true)
+
 @Document("user")
 public class User {
+
+    public static final String WORD = "酱油";
 
     @Id
     private String id;
@@ -52,7 +48,6 @@ public class User {
     @LastModifiedBy
     private String upatedUserId;
 
-    @Tolerate
     public User() {
     }
 
@@ -61,5 +56,70 @@ public class User {
         this.name = name;
         this.age = age;
         this.mail = mail;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public User setId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public String getCreatedUserId() {
+        return createdUserId;
+    }
+
+    public void setCreatedUserId(String createdUserId) {
+        this.createdUserId = createdUserId;
+    }
+
+    public String getUpatedUserId() {
+        return upatedUserId;
+    }
+
+    public void setUpatedUserId(String upatedUserId) {
+        this.upatedUserId = upatedUserId;
     }
 }

@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 import lol.kent.practice.spring.mongo.dao.UserRepository;
 import lol.kent.practice.spring.mongo.dto.UserDTO;
+import lol.kent.practice.spring.mongo.entity.SubUserOne;
+import lol.kent.practice.spring.mongo.entity.SubUserTwo;
 import lol.kent.practice.spring.mongo.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +51,20 @@ public class UserController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 测试是否支持子类继承父类的@Document
+     */
     @PostMapping
     public void create(@RequestBody UserDTO user) {
-        userRepository.save(user.getName(), user.getAge(), user.getMail());
+        SubUserOne u1 = new SubUserOne();
+        u1.setName("u1");
+        u1.setPhone("18235678961");
+        userRepository.save(u1);
+
+        SubUserTwo u2 = new SubUserTwo();
+        u2.setName("u2");
+        u2.setAddr("California");
+        mongoTemplate.save(u2);
     }
 
     @GetMapping("/{name}")
