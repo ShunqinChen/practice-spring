@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: sleuth-zipkin-client
+  zipkin:
+    base-url: http://zipkin-server
+    sender:
+      type: web
+    discovery-client-enabled: true
+  sleuth:
+    sampler:
+      rate: 10
+    async:
+      enabled: false
+  cloud:
+    config:
+      enable: false
+    consul:
+      discovery:
+        prefer-ip-address: true
+        management-port: ${management.server.port}
+        management-tags: monitor
+        tags: micro-service,management.port=${management.server.port}
+        deregister: true
+      host: 192.168.0.100
+      port: 8500
+management:
+  server:
+    port: 7700
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+server:
+  port: 8700
+debug: true

@@ -1,9 +1,13 @@
 package lol.kent.practice.sleuth.server;
 
+import lol.kent.feign.cloud.api.service.BookRpcService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import zipkin2.server.internal.EnableZipkinServer;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * <pre>
@@ -18,10 +22,16 @@ import zipkin2.server.internal.EnableZipkinServer;
  * @author Shunqin.Chen
  * @version 1.0.0
  */
-@EnableZipkinServer
 @EnableDiscoveryClient
-@SpringBootApplication
+@EnableFeignClients(basePackageClasses = BookRpcService.class)
+@SpringBootApplication(scanBasePackages = "lol.kent.*")
 public class Bootstrap {
+
+    @LoadBalanced
+    @Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(Bootstrap.class, args);
