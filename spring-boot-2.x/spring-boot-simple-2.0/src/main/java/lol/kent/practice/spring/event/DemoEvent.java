@@ -21,6 +21,20 @@ public class DemoEvent extends ApplicationEvent {
     @Getter
     private DemoEventMessage message;
 
+    private String type;
+
+    public DemoEvent(Object source) {
+        super(source);
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public DemoEvent(Object source, DemoEventMessage message) {
         super(source);
         this.message = message;

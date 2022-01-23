@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <pre>
- *    类描述:
+ *    类描述: 监听实现方式一
  * </pre>
  * <p>
  * Copyright: Copyright (c) 2020年12月04日 17:10
@@ -26,4 +26,6 @@ public class EventListener implements ApplicationListener<DemoEvent> {
         log.info("事件发生了!!!");
         //等效于@EventListener注解,注意要加@Component
     }
+
+
 }
