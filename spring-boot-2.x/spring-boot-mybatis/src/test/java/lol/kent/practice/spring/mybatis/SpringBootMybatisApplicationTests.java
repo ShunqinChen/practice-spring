@@ -1,10 +1,10 @@
-package lol.kent.practice.spring.admin.client;
+package lol.kent.practice.spring.mybatis;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootAdminClientApplicationTests {
+class SpringBootMybatisApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    hikari:
+      username: cdb_outerroot
+      password: sh123456td
+      jdbc-url: jdbc:mysql://560954873aa50.gz.cdb.myqcloud.com:15970/wujing?useSSL=false
+      driver-class-name: com.mysql.jdbc.Driver
