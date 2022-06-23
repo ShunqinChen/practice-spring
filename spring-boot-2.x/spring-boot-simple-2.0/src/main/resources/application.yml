@@ -1,0 +1,30 @@
+spring:
+  profiles:
+    active: ${env}
+  main:
+    lazy-initialization: false
+  redis:
+    database: 0
+    host: 192.168.110.102
+    port: 6379
+debug: true
+logging:
+  level:
+    org.springframework.web: debug
+
+server:
+  tomcat:
+    #最大线程数
+    max-connections: 4
+    #最大等待队列长度
+    accept-count: 1
+    #请求头最大长度kb
+    max-http-header-size: 1048576
+    #请请求体最大长度kb
+    max-http-form-post-size: 2097152
+    threads:
+      #最大链接数
+      max: 2
+      #最小线程数
+      min-spare: 1
+    connection-timeout: 4000ms
