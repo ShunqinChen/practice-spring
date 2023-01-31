@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
 import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
-import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
@@ -40,7 +39,7 @@ public class MongoConfig {
         converter.setCustomConversions(customConversions);
         converter.setCodecRegistryProvider(databaseFactory);
         // Close insert _class field
-        converter.setTypeMapper(new DefaultMongoTypeMapper(null));
+//        converter.setTypeMapper(new DefaultMongoTypeMapper(null));
         // Open Annotation Index
         mappingContext.setAutoIndexCreation(true);
 

@@ -53,6 +53,10 @@ public class PopulateAnnotationHandler extends AbstractMongoEventListener {
         }
 
         String targetClassName = document.getString("_class");
+        if (targetClassName == null) {
+            super.onAfterLoad(event);
+            return;
+        }
 
         ReflectionUtils.doWithFields(Class.forName(targetClassName), field -> {
             if (log.isDebugEnabled()) {

@@ -18,7 +18,7 @@ class SpringDataMongodbApplicationTests {
     @DisplayName("Test size of Id")
     void contextLoads() {
         UserProfile profile = new UserProfile();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100000; i++) {
             profile.addUserId(new ObjectId());
         }
         mongoTemplate.save(profile);

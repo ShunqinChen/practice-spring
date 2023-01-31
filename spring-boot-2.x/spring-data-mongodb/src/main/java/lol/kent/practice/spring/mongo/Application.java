@@ -22,7 +22,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Slf4j
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "lol.kent.*")
 public class Application {
 
 

@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.aggregation.UnwindOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.repository.Repository;
 
 /**
@@ -29,7 +30,7 @@ import org.springframework.data.repository.Repository;
  * Company: AMPM Fit
  * <p>
  *
- * @author Shunqin.Chen
+ * @author Shunqi n.Chen
  * @version 1.0.0
  */
 @Slf4j
@@ -48,7 +49,10 @@ public class UserRepository implements Repository<User, String> {
 //        user.setName(name.concat("_").concat(String.valueOf(System.currentTimeMillis())));
         user.setName(name);
         user.setMail(mail);
+        return mongoTemplate.insert(user);
+    }
 
+    public User save(User user) {
         return mongoTemplate.insert(user);
     }
 
@@ -76,5 +80,12 @@ public class UserRepository implements Repository<User, String> {
 
     }
 
+    public User returnOnlyTwoFields(String name) {
+
+        Criteria filter = Criteria.where("name").is(name);
+        Query query = Query.query(filter);
+        query.fields().include("name").include("id");
+        return mongoTemplate.findOne(query, User.class);
+    }
 
 }

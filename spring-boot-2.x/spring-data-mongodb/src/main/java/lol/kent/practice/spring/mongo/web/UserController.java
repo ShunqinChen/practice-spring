@@ -1,12 +1,14 @@
 package lol.kent.practice.spring.mongo.web;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mongodb.BasicDBObject;
 import com.mongodb.bulk.BulkWriteResult;
 import java.util.Arrays;
 import java.util.List;
+import lol.kent.practice.spring.mongo.dao.UserMongoRepository;
 import lol.kent.practice.spring.mongo.dao.UserRepository;
 import lol.kent.practice.spring.mongo.dto.UserDTO;
 import lol.kent.practice.spring.mongo.entity.SubUserOne;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.BulkOperations.BulkMode;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -49,6 +53,9 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
+    private UserMongoRepository userMongoRepository;
+
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     /**
@@ -67,8 +74,16 @@ public class UserController {
         mongoTemplate.save(u2);
     }
 
+    @PutMapping("/{name}")
+    public void update(@PathVariable String name) {
+        User u = mongoTemplate.findOne(query(Criteria.where("name").is(name)), User.class);
+        u.setAge(29);
+        userMongoRepository.save(u);
+    }
+
     @GetMapping("/{name}")
     public BasicDBObject get(@PathVariable("name") String name) throws JsonProcessingException {
+
         return userRepository.get(name);
     }
 
@@ -85,12 +100,17 @@ public class UserController {
 //        mongoTemplate.insertAll(userList);
 
         userList.stream().forEach(user -> {
-            Query filter = Query.query(where("_id").is(user.getId()));
+            Query filter = query(where("_id").is(user.getId()));
             Update update = new Update().set("name", user.getName() + "_" + System.currentTimeMillis());
             ops.updateOne(filter, update);
         });
 
         BulkWriteResult result = ops.execute();
         log.info("result: {}", result.toString());
+    }
+
+    @GetMapping("/twoFields")
+    public User getOnlyTwoFields(@RequestParam("name") String name) {
+        return userRepository.returnOnlyTwoFields(name);
     }
 }
